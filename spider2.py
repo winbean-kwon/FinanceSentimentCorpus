@@ -1,5 +1,6 @@
 
 import scrapy
+from bs4 import BeautifulSoup
 import pandas as pd
 import time
 import csv
@@ -23,18 +24,32 @@ class NaverFinanceSpider(scrapy.Spider):
         with open('contents.csv', 'a', newline='', encoding='utf-8') as f:
             code = response.meta['code']
             for row in response.css('table.type5 tr'):
+                content_url = row.css('td.title a::attr(href)').extract_first()
                 title = row.css('td.title a::text').get()
                 source = row.css('td.info::text').get()
                 date = row.css('td.date::text').get()
-                time.sleep(0.5)
+
                 self.log(title)
                 if title and source and date:
                     item = {
                         'code': code,
                         'title': title.strip(),
                         'source': source.strip(),
-                        'date': date.strip()
+                        'date': date.strip(),
+                        'content_url': content_url.strip()
                     }
                     writer = csv.DictWriter(f, fieldnames=item.keys())
                     writer.writerow(item)
                     yield item
+
+                time.sleep(0.5)
+
+def parse_content_url(self, response):
+    """
+    >>> html_content = response.xpath('/html').extract_first()
+    "<html><head><script>top.location.href='https://n.news.naver.com/mnews/article/016/0002306239';</script></head></html>"
+    >>> soup = BeautifulSoup(html_content, 'html.parser')
+    >>> script_tag = soup.find('script')
+    >>> url = script_tag.text.split("'")[1]  
+    """
+    pass
