@@ -8,7 +8,7 @@ import time
 base_url = 'https://n.news.naver.com/mnews/article'
 header = {"user-agent": "Mozilla/5.0"}
 
-companies = ['032', '024', '081', '243', '353', '215', '055', '005', '009', '022', '366', '025', '469', '052', '421', '417', '262', '023', '014', '016', '003', '008', '277', '123', '028', '057', '020', '021', '422', '033', '015', '374', '029', '011', '018', '037', '050', '214']
+companies = ['032','024','081','243','353','215','055','005','009','022','366','025','469','052','421','417','262','023','014','016','003','008','277','123','028','057','020','021','422','033','015','374','029','011','018','037','050','214']
 
 with open('contents.csv', 'a', newline='', encoding="utf8") as to_write:
     writer = csv.writer(to_write)       
@@ -23,7 +23,7 @@ with open('contents.csv', 'a', newline='', encoding="utf8") as to_write:
                 if response.status_code == 200:
                     soup = BeautifulSoup(response.text, 'html.parser')
                     title = soup.find('h2', class_="media_end_head_headline")
-                    
+
                     if title:
                         title_text = title.text.strip()
                     else:
