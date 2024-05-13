@@ -12,16 +12,20 @@ class NaverFinanceSpider(scrapy.Spider):
     df = pd.read_csv('datasets/test_code.csv')
     codes = df['종목코드'].tolist()
 
+    def _news_list_url(self, code: str):
+        return f"https://finance.naver.com/item/news.naver?code={code:06d}"
+
     def start_requests(self):
-        self.log('start_requests')
         for code in self.codes:
-            for page in range(1, 2):
-                url = f'https://finance.naver.com/item/news_news.nhn?code={code}&page={page}&sm=title_entity_id.basic&clusterId='
-                time.sleep(0.5)
-                yield scrapy.Request(url, callback=self.parse, meta={'code': code})
+            self.log(f'start_requests...for {code:06d}')
+            
+            # for page in range(1, 2):
+            #     url = f'https://finance.naver.com/item/news_news.nhn?code={code}&page={page}&sm=title_entity_id.basic&clusterId='
+            #     time.sleep(0.5)
+            #     yield scrapy.Request(url, callback=self.parse, meta={'code': code})
 
     def parse(self, response):
-        with open('contents.csv', 'a', newline='', encoding='utf-8') as f:
+        with open('datasets/contents.csv', 'a', newline='', encoding='utf-8') as f:
             code = response.meta['code']
             for row in response.css('table.type5 tr'):
                 content_url = row.css('td.title a::attr(href)').extract_first()
