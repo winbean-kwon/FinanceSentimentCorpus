@@ -54,6 +54,12 @@ PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = (
 )
 
 PLAYWRIGHT_BROWSER_TYPE = "chromium"
+PLAYWRIGHT_LAUNCH_OPTIONS = {
+    "headless": False,
+} 
+
+# 2024-05-15 13:59:43 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: <GET https://finance.naver.com/item/news.naver?code=060310>
+ROBOTSTXT_OBEY = False
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
