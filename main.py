@@ -9,7 +9,7 @@ from datetime import datetime
 class NaverFinanceSpider(scrapy.Spider):
     name = 'naver_finance'
     allowed_domains = ['naver.com']
-    df = pd.read_csv('test_code.csv')
+    df = pd.read_csv('datasets/test_code.csv')
     codes = df['종목코드'].tolist()
 
     def start_requests(self):
