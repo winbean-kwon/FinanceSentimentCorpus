@@ -20,5 +20,4 @@ scrapy crawl news_contents
 
 ## html compression algorithm
 
-크롤링한 html 코드를 바이너리 그대로 저장하는데, 이때 `lzma` 알고리즘을 통해 압축해서 저장한다. 
-간단한 테스트에서 `lz4, gzip, bz2, lzma` 중 `lzma` 가 가장 압축률이 좋았다. 압축 시간은 상관하지 않았다. [results](https://chat.openai.com/share/a0a256b4-6e04-4920-8f4e-7b7285977476)
+The crawled HTML code is stored as binary, compressed using the `lzma` algorithm. [Simple tests](https://chat.openai.com/share/a0a256b4-6e04-4920-8f4e-7b7285977476) showed that among `lz4`, `gzip`, `bz2`, and `lzma`, `lzma` had the best compression ratio. Compression time was not considered.
