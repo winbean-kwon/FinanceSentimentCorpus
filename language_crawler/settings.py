@@ -44,19 +44,34 @@ ROBOTSTXT_OBEY = True
 
 # In DOWNLOAD_HANDLERS, we specify that we’ll want to use the Scrapy Playwright request handlers 
 # for both our http and https requests.
-DOWNLOAD_HANDLERS = {
-    "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-    "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-}
 
-PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = (
-    30 * 1000
-)
+# Disable the scrapy-playwright download handler
+# DOWNLOAD_HANDLERS = {
+#     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+#     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+# }
 
-PLAYWRIGHT_BROWSER_TYPE = "chromium"
-PLAYWRIGHT_LAUNCH_OPTIONS = {
-    "headless": False,
-} 
+# PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = (
+#     30 * 1000
+# )
+
+# PLAYWRIGHT_BROWSER_TYPE = "chromium"
+# PLAYWRIGHT_LAUNCH_OPTIONS = {
+#     "headless": False,
+# } 
+
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+#     'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
+#     'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+#     'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
+# }
+
+FAKEUSERAGENT_PROVIDERS = [
+    'scrapy_fake_useragent.providers.FakeUserAgentProvider',
+    'scrapy_fake_useragent.providers.FakerProvider',  
+    'scrapy_fake_useragent.providers.FixedUserAgentProvider',
+]
 
 # 2024-05-15 13:59:43 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: <GET https://finance.naver.com/item/news.naver?code=060310>
 ROBOTSTXT_OBEY = False
@@ -81,9 +96,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   "language_crawler.pipelines.FinanceNewsListPipeline": 1,
-}
+# ITEM_PIPELINES = {
+#    "language_crawler.pipelines.FinanceNewsListPipeline": 1,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

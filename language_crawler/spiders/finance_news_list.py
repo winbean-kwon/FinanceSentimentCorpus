@@ -11,13 +11,16 @@ from language_crawler.items import ArticleItem
 class FinanceNewsList(scrapy.Spider):
     name = os.path.basename(__file__).replace('.py', '')
     allowed_domains = ['naver.com']
+    custom_settings =dict(
+        ITEM_PIPELINES = {"language_crawler.pipelines.FinanceNewsListPipeline": 1}
+    )
 
     df = pd.read_csv('datasets/test_code.csv')
     codes = df['종목코드'].tolist()
 
     def start_requests(self):
         for code in self.codes:
-            target_url = self._get_news_url(code, page=1)
+            target_url = self._get_target_url(code, page=1)
 
             yield scrapy.Request(
                 target_url,
@@ -26,7 +29,7 @@ class FinanceNewsList(scrapy.Spider):
                 errback=self.errback,
             )
         
-    def _get_news_url(self, code: str, page: str=1):
+    def _get_target_url(self, code: str, page: str=1):
         return f"https://finance.naver.com/item/news_news.naver?code={code:06d}&page={page}"
 
 
@@ -105,7 +108,7 @@ class FinanceNewsList(scrapy.Spider):
         time.sleep(0.5)
 
         yield scrapy.Request(
-            self._get_news_url(meta['code'], current_page + 1),
+            self._get_target_url(meta['code'], current_page + 1),
             meta=dict(code=meta['code'], page=current_page + 1),
             callback=self.parse, 
             errback=self.errback,
