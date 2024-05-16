@@ -99,7 +99,7 @@ class FinanceNewsList(scrapy.Spider):
                 media_name=source,
                 title=title,
                 link=content_url,
-                date=date,
+                article_published_at=date,
                 is_origin=is_relation_origin,
                 origin_id=relation_origin_id if is_related else None,
             )

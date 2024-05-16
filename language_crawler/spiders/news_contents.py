@@ -1,3 +1,4 @@
+import logging
 from time import sleep
 from typing import Iterable, Union
 from datetime import datetime
@@ -9,10 +10,8 @@ from twisted.python.failure import Failure
 from bs4 import BeautifulSoup
 
 from language_crawler.database.models import ArticleContentOrm, ArticleOrm
-from language_crawler.database.session import SessionLocal 
-
-from newspaper import Article
-
+from language_crawler.database.session import SessionLocal
+from language_crawler.items import ArticleContentItem 
 
 ArticleId = Union[str, int]
 OfficeId = Union[str, int]
@@ -22,10 +21,15 @@ def _get_target_url(article_id: ArticleId, office_id: OfficeId):
     office_id = int(office_id) if isinstance(office_id, str) else office_id
     return f"https://n.news.naver.com/mnews/article/{office_id:03d}/{article_id:010d}"
 
+
+logging.getLogger('faker').setLevel(logging.WARNING)
+
 class NewsContents(scrapy.Spider):
+    verbose = False
     name = "news_contents"
     allowed_domains = ["naver.com"]
-    custom_settings = dict(
+    custom_settings = dict( 
+        ITEM_PIPELINES = {"language_crawler.pipelines.FinanceNewsContentPipeline": 1},
         DOWNLOADER_MIDDLEWARES={
             "scrapy.downloadermiddlewares.useragent.UserAgentMiddleware": None,
             "scrapy.downloadermiddlewares.retry.RetryMiddleware": None,
@@ -46,7 +50,6 @@ class NewsContents(scrapy.Spider):
             .filter(ArticleOrm.latest_scraped_at == None)\
             .all()
         for article in articles:
-            self.log(article)
             yield Request(
                 _get_target_url(article.article_id, article.media_id),
                 meta=dict(
@@ -59,12 +62,16 @@ class NewsContents(scrapy.Spider):
             sleep(1)
     
     async def parse(self, response: HtmlResponse):
-        # Print out the user-agent of the request to check they are random
-        self.log(response.request.headers.get("User-Agent"))
-        self.log(response.url)
+        if self.verbose: 
+            # Print out the user-agent of the request to check they are random
+            self.log(response.request.headers.get("User-Agent"))
+            self.log(response.url)
 
         title = response.xpath("/html/body/div[1]/div[2]/div/div[1]/div[1]/div[1]/div[2]/h2/span/text()").get()
         content_html = response.xpath("/html/body/div[1]/div[2]/div/div[1]/div[1]/div[2]/div[1]/article").get()
+        if content_html is None:
+            # TODO: Handle when content_html is not found.
+            return 
         soup = BeautifulSoup(content_html, "html.parser")
         for tag in soup(['img', 'span', 'strong', 'em', 'div']):
             tag.decompose()
@@ -72,38 +79,32 @@ class NewsContents(scrapy.Spider):
         
         media_end_head_info_datestamp = response.xpath("/html/body/div[1]/div[2]/div/div[1]/div[1]/div[1]/div[3]/div[1]")
         publish_date_html = media_end_head_info_datestamp.xpath("div[1]/span/@data-date-time").get()
-        publish_date = datetime.strptime(publish_date_html, "%Y-%m-%d %H:%M:%S") if publish_date_html else None
         modified_date_html = media_end_head_info_datestamp.xpath("div[2]/span/@data-date-time").get()
-        modified_date = datetime.strptime(modified_date_html, "%Y-%m-%d %H:%M:%S") if modified_date_html else None
 
-        self.log(title)
-        self.log(contnet_text)
-        self.log(publish_date)
-        self.log(modified_date)
+        if self.verbose: 
+            self.log(title)
+            self.log(contnet_text)
+            self.log(publish_date_html)
+            self.log(modified_date_html)
         
         if not title or not content_html:
+            # TODO: Handle when title or content_html is not found.
             self.log("Failed to extract title or content_html")
             return
-        
-        session = SessionLocal()
-        article = session.query(ArticleOrm).filter_by(
+
+        yield ArticleContentItem(
             article_id=response.meta['article_id'],
-            media_id=response.meta['media_id']
-        ).first()
-        article.latest_scraped_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        session.commit()
-        
-        article_content = ArticleContentOrm(
-            article_id=article.article_id,
-            media_id=article.media_id,
+            media_id=response.meta['media_id'],
             html=response.text,
             content=contnet_text,
             title=title,
             language='ko',
+            article_published_at=publish_date_html,
+            article_modified_at=modified_date_html, 
+            response=response
         )
         
-        session.close()
-                
+
     async def errback(self, failure: Failure):
         self.log(type(failure))
         self.log(failure)
