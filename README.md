@@ -15,8 +15,8 @@ scrapy crawl news_contents
 ```
 
 ## Scrapy-extension
-1. [scrapy-fake-agent](https://github.com/alecxe/scrapy-fake-useragent)
-2. [scrapy-playwright](https://github.com/scrapy-plugins/scrapy-playwright)
+- [scrapy-fake-agent](https://github.com/alecxe/scrapy-fake-useragent)
+- [scrapy-playwright](https://github.com/scrapy-plugins/scrapy-playwright)
 
 ## html compression algorithm
 
