@@ -86,10 +86,10 @@ class FinanceNewsList(scrapy.Spider):
             self.log(f"Content URL: {content_url}")
             if is_related:
                 self.log(f"Related article found: {title}")
-                office_id, article_id = self._extract_cluster_ids(row_class)
-                if office_id and article_id:
-                    self.log(f"Office ID: {office_id}, News ID: {article_id}")
-                relation_origin_id = f"{office_id}{article_id}"
+                rel_office_id, rel_article_id = self._extract_cluster_ids(row_class)
+                if rel_office_id and rel_article_id:
+                    self.log(f"Office ID: {rel_office_id}, News ID: {rel_article_id}")
+                relation_origin_id = f"{rel_office_id}{rel_article_id}"
             else:
                 self.log(f"Main article found: {title}")
             

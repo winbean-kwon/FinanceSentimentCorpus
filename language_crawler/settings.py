@@ -60,6 +60,7 @@ ROBOTSTXT_OBEY = True
 #     "headless": False,
 # } 
 
+# Disable the Scrapy User-Agent middleware
 # DOWNLOADER_MIDDLEWARES = {
 #     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
 #     'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
@@ -67,11 +68,11 @@ ROBOTSTXT_OBEY = True
 #     'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
 # }
 
-FAKEUSERAGENT_PROVIDERS = [
-    'scrapy_fake_useragent.providers.FakeUserAgentProvider',
-    'scrapy_fake_useragent.providers.FakerProvider',  
-    'scrapy_fake_useragent.providers.FixedUserAgentProvider',
-]
+# FAKEUSERAGENT_PROVIDERS = [
+#     'scrapy_fake_useragent.providers.FakeUserAgentProvider',
+#     'scrapy_fake_useragent.providers.FakerProvider',  
+#     'scrapy_fake_useragent.providers.FixedUserAgentProvider',
+# ]
 
 # 2024-05-15 13:59:43 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: <GET https://finance.naver.com/item/news.naver?code=060310>
 ROBOTSTXT_OBEY = False

@@ -23,18 +23,32 @@ def _get_target_url(article_id: ArticleId, office_id: OfficeId):
 class NewsContents(scrapy.Spider):
     name = "news_contents"
     allowed_domains = ["naver.com"]
+    custom_settings = dict(
+        DOWNLOADER_MIDDLEWARES={
+            "scrapy.downloadermiddlewares.useragent.UserAgentMiddleware": None,
+            "scrapy.downloadermiddlewares.retry.RetryMiddleware": None,
+            "scrapy_fake_useragent.middleware.RandomUserAgentMiddleware": 400,
+            "scrapy_fake_useragent.middleware.RetryUserAgentMiddleware": 401,
+        },
+        FAKEUSERAGENT_PROVIDERS=[
+            "scrapy_fake_useragent.providers.FakerProvider",
+            "scrapy_fake_useragent.providers.FakeUserAgentProvider",
+            "scrapy_fake_useragent.providers.FixedUserAgentProvider",
+        ],
+    )
 
     def start_requests(self) -> Iterable[Request]:
         session = SessionLocal()
         articles = session.query(ArticleOrm).all()
         for article in articles:
+            self.log(article)
             yield Request(
                 _get_target_url(article.article_id, article.media_id),
                 meta=dict(article_id=article.article_id),
                 callback=self.parse,
                 errback=self.errback,
             )
-            sleep(10)
+            sleep(1)
     
     async def parse(self, response: HtmlResponse):
         # Print out the user-agent of the request to check they are random

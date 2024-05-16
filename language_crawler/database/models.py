@@ -10,7 +10,7 @@ class ArticleOrm(Base):
     title = Column(String, nullable=False)
     link = Column(String, nullable=False)
     date = Column(String, nullable=False)
-    is_related = Column(Boolean, nullable=False)
+    is_origin = Column(Boolean, nullable=False)
     original_id = Column(String, nullable=True)
     latest_scraped_at = Column(String, nullable=True)
 

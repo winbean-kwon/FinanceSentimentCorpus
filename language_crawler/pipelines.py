@@ -54,7 +54,7 @@ class FinanceNewsListPipeline:
             title=item['title'],
             link=item['link'],
             date=item['date'],
-            is_related=item['is_origin'],
+            is_origin=item['is_origin'],
             original_id=item.get('origin_id'),
         )
         self.sess.add(article)
