@@ -13,3 +13,7 @@ scrapy crawl finance_news_list
 # TASK2: 저장된 네이버 뉴스 링크 리스트에서 하나씩 뉴스 본문 파싱
 scrapy crawl news_contents
 ```
+
+#### Scrapy-extension
+1. [scrapy-fake-agent](https://github.com/alecxe/scrapy-fake-useragent)
+2. [scrapy-playwright](https://github.com/scrapy-plugins/scrapy-playwright)
