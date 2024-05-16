@@ -12,6 +12,7 @@ requests = "^2.31.0"
 pandas = {extras = ["aws", "compression", "computation", "fss", "html", "output-formatting", "performance", "plot"], version = "^2.2.2"}
 scrapy = "^2.11.1"
 scrapy-playwright = "^0.0.34"
+alembic = "^1.13.1"
 
 
 [build-system]

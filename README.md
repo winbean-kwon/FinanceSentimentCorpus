@@ -2,6 +2,7 @@
 
 ## Usage
 ```bash
+export PYTHONPATH=$(pwd):$(pwd)/language_crawler
 scrapy runspider spider2.py
 ```
 
@@ -25,4 +26,24 @@ poetry add scrapy-playwright
 playwright install
 
 scrapy startproject language_crawler
+```
+
+### Alembic initialization
+```bash
+cd language_crawler
+
+# edit alembic.ini at Line 63
+# sqlalchemy.url = sqlite://-
+
+# edit language_crawler/database/session.py
+# DATABASE_URL = f'sqlite://{os.path.join(project_path, "..", "..", "datasets")}/naver_news.db'
+
+# Create a Migration Script:
+alembic revision --autogenerate -m "Initial migration"
+
+# Apply Migrations
+alembic upgrade head
+
+alembic revision --autogenerate -m "Change column name of article table"
+alembic upgrade head
 ```

@@ -12,7 +12,7 @@ class FinanceNewsList(scrapy.Spider):
     name = os.path.basename(__file__).replace('.py', '')
     allowed_domains = ['naver.com']
 
-    df = pd.read_csv('../datasets/test_code.csv')
+    df = pd.read_csv('datasets/test_code.csv')
     codes = df['종목코드'].tolist()
 
     def start_requests(self):
@@ -43,8 +43,10 @@ class FinanceNewsList(scrapy.Spider):
         if not info_text_area:
             self.log(f"Failed to find info_text_area for {meta['code']}. Performing full search.")
             if '뉴스가 없습니다.' in response.text:
-                self.log(f"End of page reached for {meta['code']}")
+                self.log(f"Full Searching successfully done! End of page reached for {meta['code']}")
                 return
+            else:
+                self.log(f"Full Searching failed for {meta['code']}. Something went wrong.")
         
         processed_ids = set()
         
