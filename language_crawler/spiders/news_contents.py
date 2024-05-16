@@ -55,7 +55,7 @@ class NewsContents(scrapy.Spider):
         self.log(response.request.headers.get("User-Agent"))
         self.log(response.url)
 
-        article = Article(response.url)
+        article = Article(response.url, language='ko')
         article.set_html(response.text)
         article.parse()
 
