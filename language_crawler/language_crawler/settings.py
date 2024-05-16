@@ -81,9 +81,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "language_crawler.pipelines.LanguageCrawlerPipeline": 300,
-#}
+ITEM_PIPELINES = {
+   "language_crawler.pipelines.FinanceNewsListPipeline": 1,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

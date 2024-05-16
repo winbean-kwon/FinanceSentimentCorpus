@@ -6,12 +6,12 @@
 import scrapy
 
 
-class LanguageCrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
-
-class Book(scrapy.Item):
-   title = scrapy.Field()
-   price = scrapy.Field()
+class ArticleItem(scrapy.Item):
+    article_id = scrapy.Field()
+    media_id = scrapy.Field()
+    media_name = scrapy.Field()
+    title = scrapy.Field()
+    link = scrapy.Field()
+    date = scrapy.Field()
+    is_origin = scrapy.Field()
+    origin_id = scrapy.Field()
