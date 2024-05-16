@@ -16,8 +16,8 @@ class FinanceNewsList(scrapy.Spider):
     codes = df['종목코드'].tolist()
 
     def start_requests(self):
-        for code in self.codes[:2]:
-            target_url = self._get_news_url(126600)
+        for code in self.codes:
+            target_url = self._get_news_url(code, page=1)
 
             yield scrapy.Request(
                 target_url,
