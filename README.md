@@ -1,11 +1,11 @@
 # Project
-
-[한글 문서](assets/README_KO.md)
-
 <p align="center">
     <img src="assets/main.png" alt="Logo">
 </p>
 
+| Docs | Link |
+|------|------|
+| [한글 문서](assets/README_KO.md) | [Team Notion](https://www.notion.so/yb98/097de26b8c5f4b5c83a4cd5b18c78103) |
 
 This project aims to develop algorithmic trading models that crawl news articles to predict and trade the direction of stocks and financial instruments.
 It also aims to utilize the [LangChain-ai](https://github.com/langchain-ai) and [Transformers(HuggingFace)](https://github.com/huggingface/transformers)models to deeply analyze linguistic data from the financial domain and detect inefficiencies in the market.
