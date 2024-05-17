@@ -8,7 +8,7 @@
 
 
 This project aims to develop algorithmic trading models that crawl news articles to predict and trade the direction of stocks and financial instruments.
-It also aims to utilize the `LangChain` and `Transformer (HuggingFace)` models to deeply analyze linguistic data from the financial domain and detect inefficiencies in the market.
+It also aims to utilize the [LangChain-ai](https://github.com/langchain-ai) and [Transformers(HuggingFace)](https://github.com/huggingface/transformers)models to deeply analyze linguistic data from the financial domain and detect inefficiencies in the market.
 
 ## Key Features
 - **Analyze the causes of price fluctuations**: Infer the causes of price fluctuations in your holdings from analyst reports, electronic disclosures, and news data, and automatically report them.
