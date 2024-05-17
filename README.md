@@ -12,7 +12,7 @@ It also aims to utilize the `LangChain` and `Transformer (HuggingFace)` models t
 
 ## Key Features
 - **Analyze the causes of price fluctuations**: Infer the causes of price fluctuations in your holdings from analyst reports, electronic disclosures, and news data, and automatically report them.
-- Real-time data collection and ultra-short-term trading: Collect analyst reports, electronic disclosures, and news data in real-time to execute ultra-short-term directional trading strategies.
+- **Real-time data collection and ultra-short-term trading**: Collect analyst reports, electronic disclosures, and news data in real-time to execute ultra-short-term directional trading strategies.
 
 This project aims to use advanced natural language processing (NLP) techniques to reduce information asymmetries in financial markets and maximize the performance of quantitative trading strategies.
 
