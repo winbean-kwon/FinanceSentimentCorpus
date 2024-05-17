@@ -1,4 +1,5 @@
 import logging
+import os
 from time import sleep
 from typing import Iterable, Union
 from datetime import datetime
@@ -26,7 +27,7 @@ logging.getLogger('faker').setLevel(logging.WARNING)
 
 class NewsContents(scrapy.Spider):
     verbose = False
-    name = "news_contents"
+    name = os.path.basename(__file__).replace('.py', '')
     allowed_domains = ["naver.com"]
     custom_settings = dict( 
         ITEM_PIPELINES = {"language_crawler.pipelines.FinanceNewsContentPipeline": 1},
@@ -55,6 +56,7 @@ class NewsContents(scrapy.Spider):
                 meta=dict(
                     article_id=article.article_id,
                     media_id=article.media_id,
+                    ticker=article.ticker,
                 ),
                 callback=self.parse,
                 errback=self.errback,
