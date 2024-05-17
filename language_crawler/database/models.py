@@ -6,6 +6,7 @@ from language_crawler.database.base import Base
 class ArticleOrm(Base):
     __tablename__ = 'articles'
     id = Column(Integer, primary_key=True, autoincrement=True)
+    ticker = Column(String, nullable=False)
     article_id = Column(String, nullable=False)
     media_id = Column(String, nullable=False)
     media_name = Column(String, nullable=False)
@@ -20,6 +21,7 @@ class ArticleOrm(Base):
 class ArticleContentOrm(Base):
     __tablename__ = 'article_contents'
     id = Column(Integer, primary_key=True, autoincrement=True)
+    ticker = Column(String, nullable=False)
     article_id = Column(String, nullable=False)
     media_id = Column(String, nullable=False)
     html = Column(LargeBinary, nullable=False)

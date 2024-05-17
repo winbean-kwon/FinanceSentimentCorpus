@@ -9,6 +9,7 @@ class ItemBase(scrapy.Item):
     response = scrapy.Field()
 
 class ArticleItem(ItemBase):
+    ticker = scrapy.Field()
     article_id = scrapy.Field()
     media_id = scrapy.Field()
     media_name = scrapy.Field()
@@ -20,6 +21,7 @@ class ArticleItem(ItemBase):
 
 
 class ArticleContentItem(ItemBase):
+    ticker = scrapy.Field()
     article_id = scrapy.Field()
     media_id = scrapy.Field()
     html = scrapy.Field()

@@ -59,7 +59,6 @@ class NewsContents(scrapy.Spider):
                 callback=self.parse,
                 errback=self.errback,
             )
-            sleep(1)
     
     async def parse(self, response: HtmlResponse):
         if self.verbose: 
@@ -93,6 +92,7 @@ class NewsContents(scrapy.Spider):
             return
 
         yield ArticleContentItem(
+            ticker=response.meta['ticker'],
             article_id=response.meta['article_id'],
             media_id=response.meta['media_id'],
             html=response.text,

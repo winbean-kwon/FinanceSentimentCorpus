@@ -49,6 +49,7 @@ class FinanceNewsListPipeline:
             return item
 
         article = ArticleOrm(
+            ticker=item['ticker'],
             article_id=item['article_id'],
             media_id=item['media_id'],
             media_name=item['media_name'],
@@ -80,6 +81,7 @@ class FinanceNewsContentPipeline:
         article.latest_scraped_at = datetime.now(kst)
                 
         article_content = ArticleContentOrm(
+            ticker=item['ticker'],
             article_id=item['article_id'],
             media_id=item['media_id'],
             html=lzma.compress(item['html'].encode('utf-8')),

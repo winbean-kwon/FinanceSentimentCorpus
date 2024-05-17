@@ -16,21 +16,21 @@ class FinanceNewsList(scrapy.Spider):
     )
 
     df = pd.read_csv('datasets/test_code.csv')
-    codes = df['종목코드'].tolist()
+    tickers = df['종목코드'].tolist()
 
     def start_requests(self):
-        for code in self.codes:
-            target_url = self._get_target_url(code, page=1)
+        for ticker in self.tickers:
+            target_url = self._get_target_url(ticker, page=1)
 
             yield scrapy.Request(
                 target_url,
-                meta=dict(code=code, page=1),
+                meta=dict(ticker=ticker, page=1),
                 callback=self.parse, 
                 errback=self.errback,
             )
         
-    def _get_target_url(self, code: str, page: str=1):
-        return f"https://finance.naver.com/item/news_news.naver?code={code:06d}&page={page}"
+    def _get_target_url(self, ticker: str, page: str=1):
+        return f"https://finance.naver.com/item/news_news.naver?code={ticker:06d}&page={page}"
 
 
     async def parse(self, response: HtmlResponse):
@@ -40,16 +40,16 @@ class FinanceNewsList(scrapy.Spider):
         # Check end of page
         info_text_area = response.css('div > table > tbody > tr > td > div').get()
         if info_text_area and '뉴스가 없습니다.' in info_text_area:
-            self.log(f"End of page reached for {meta['code']}")
+            self.log(f"End of page reached for {meta['ticker']}")
             return
 
         if not info_text_area:
-            self.log(f"Failed to find info_text_area for {meta['code']}. Performing full search.")
+            self.log(f"Failed to find info_text_area for {meta['ticker']}. Performing full search.")
             if '뉴스가 없습니다.' in response.text:
-                self.log(f"Full Searching successfully done! End of page reached for {meta['code']}")
+                self.log(f"Full Searching successfully done! End of page reached for {meta['ticker']}")
                 return
             else:
-                self.log(f"Full Searching failed for {meta['code']}. Something went wrong.")
+                self.log(f"Full Searching failed for {meta['ticker']}. Something went wrong.")
         
         processed_ids = set()
         
@@ -94,6 +94,7 @@ class FinanceNewsList(scrapy.Spider):
                 self.log(f"Main article found: {title}")
             
             yield ArticleItem(
+                ticker=response.meta['ticker'],
                 article_id=article_id,
                 media_id=office_id,
                 media_name=source,
@@ -108,8 +109,8 @@ class FinanceNewsList(scrapy.Spider):
         time.sleep(0.5)
 
         yield scrapy.Request(
-            self._get_target_url(meta['code'], current_page + 1),
-            meta=dict(code=meta['code'], page=current_page + 1),
+            self._get_target_url(meta['ticker'], current_page + 1),
+            meta=dict(ticker=meta['ticker'], page=current_page + 1),
             callback=self.parse, 
             errback=self.errback,
         )
