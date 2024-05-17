@@ -1,18 +1,20 @@
-# 시장의나침판
+# Project
 
 <p align="center">
-  <img src="assets/main.png" alt="Logo">
+    <img src="assets/main.png" alt="Logo">
+</p>
+<p align="center">
+    [한글 문서](assets/README_KO.md)
 </p>
 
-이 프로젝트는 뉴스 기사를 크롤링하여 주식 및 금융 상품의 방향성을 예측하고 거래하는 알고리즘 트레이딩 모델을 개발하는 것을 목적으로 합니다.
-또한, `LangChain`과 `Transformer(HuggingFace)` 모델을 활용하여 금융 도메인에서 발생하는 언어 데이터를 심층 분석하고, 시장의 비효율성을 탐지하는 것을 목표로 합니다.
+This project aims to develop algorithmic trading models that crawl news articles to predict and trade the direction of stocks and financial instruments.
+It also aims to utilize the `LangChain` and `Transformer (HuggingFace)` models to deeply analyze linguistic data from the financial domain and detect inefficiencies in the market.
 
-## 주요 기능
-- **가격 변동 원인 분석**: 보유 자산의 가격 변동 원인을 애널리스트 보고서, 전자 공시, 뉴스 데이터를 통해 추론하고, 이를 자동으로 보고서로 작성합니다.
-- **실시간 데이터 수집 및 초단기 매매**: 실시간으로 애널리스트 보고서, 전자 공시, 뉴스 데이터를 수집하여 초단기 방향성 매매 전략을 실행합니다.
+## Key Features
+- **Analyze the causes of price fluctuations**: Infer the causes of price fluctuations in your holdings from analyst reports, electronic disclosures, and news data, and automatically report them.
+- Real-time data collection and ultra-short-term trading: Collect analyst reports, electronic disclosures, and news data in real-time to execute ultra-short-term directional trading strategies.
 
-이 프로젝트는 고급 자연어 처리(NLP) 기술을 사용하여 금융 시장에서 발생하는 정보 비대칭성을 줄이고, 정량적 거래 전략의 성능을 극대화하는 것을 목표로 합니다.
-
+This project aims to use advanced natural language processing (NLP) techniques to reduce information asymmetries in financial markets and maximize the performance of quantitative trading strategies.
 
 ## Usage
 ```bash
