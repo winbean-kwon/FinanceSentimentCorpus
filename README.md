@@ -1,11 +1,11 @@
 # Project
 
+[한글 문서](assets/README_KO.md)
+
 <p align="center">
     <img src="assets/main.png" alt="Logo">
 </p>
-<p align="center">
-    [한글 문서](assets/README_KO.md)
-</p>
+
 
 This project aims to develop algorithmic trading models that crawl news articles to predict and trade the direction of stocks and financial instruments.
 It also aims to utilize the `LangChain` and `Transformer (HuggingFace)` models to deeply analyze linguistic data from the financial domain and detect inefficiencies in the market.
